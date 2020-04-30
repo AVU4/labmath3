@@ -33,7 +33,7 @@ public class dataSetForCreatingGraphic {
     }
 
     public XYDataset createDataset(){
-        XYSeries series1 = new XYSeries("График функции");
+        XYSeries series1 = new XYSeries("График функции sin(x) * sqrt(x + PI*2)");
         for (int i = 0; i < coordinatesX.size(); i ++){
             series1.add(coordinatesX.get(i), coordinatesY.get(i));
         }

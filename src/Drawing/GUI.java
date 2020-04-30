@@ -1,6 +1,8 @@
 package Drawing;
 
 import dataSet.dataSetForCreatingGraphic;
+import logic.CreatingDataSetForGraphic;
+import logic.CreatingDataSetForPolynimial;
 import math.PolynomialLangrage;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -24,28 +26,54 @@ public class GUI extends JFrame {
     private JButton button = new JButton("Посчитать");
     private JTextField input = new JTextField("", 5);
     private JLabel label = new JLabel("Координата X : ");
+    private  JRadioButton radio1 = new JRadioButton("Первая выборка");
+    private JRadioButton radio2 = new JRadioButton("Вторая выборка");
+    private JRadioButton radio3 = new JRadioButton("Третья выборка", true);
+    private JButton button2 = new JButton("Обновить рисунок");
+    private CreatingDataSetForPolynimial creatingDataSetForPolynimial = new CreatingDataSetForPolynimial();
+    private CreatingDataSetForGraphic creatingDataSetForGraphic = new CreatingDataSetForGraphic();
 
     public GUI(){
         super("График функция");
         this.setBounds(100, 100, 600, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ButtonGroup group = new ButtonGroup();
+        group.add(radio1);
+        group.add(radio2);
+        group.add(radio3);
+
         Container container = this.getContentPane();
+
         label.setPreferredSize(new Dimension(50, 25));
         input.setPreferredSize(new Dimension(50, 25));
         button.setPreferredSize(new Dimension(25, 25));
+
+        container.add(radio1);
+        container.add(radio2);
+        container.add(radio3);
         container.add(label);
         container.add(input);
+
         button.addActionListener(new ButtonEventListener ());
+
+
         container.add(button);
-        container.add(createDemoPanel());
+        container.add(button2);
+
+        JPanel myPanel = createDemoPanel();
+        container.add(myPanel);
+
+        //Как поменять состояние панели
+        
+
         setLayout(new BoxLayout(container, 1));
     }
     class ButtonEventListener implements ActionListener{
+
         @Override
         public void actionPerformed(ActionEvent e) {
             Double x = Double.parseDouble(input.getText());
             double y =  polynomialLangrage.getY(x);
-            System.out.println(x + " " + y);
             String message = "Приближённое значение функции : " + y;
             JOptionPane.showMessageDialog(null, message, "Output", JOptionPane.PLAIN_MESSAGE);
         }
@@ -53,6 +81,10 @@ public class GUI extends JFrame {
 
     public JPanel createDemoPanel()
     {
+
+        creatingDataSetForPolynimial.create(3);
+
+        creatingDataSetForGraphic.create();
         JFreeChart chart = createChart(dataSetForCreatingGraphic.createDataset());
         chart.setPadding(new RectangleInsets( 1, 1, 1, 1));
         ChartPanel panel = new ChartPanel(chart);
@@ -91,7 +123,6 @@ public class GUI extends JFrame {
 
         return chart;
     }
-
 }
 
 

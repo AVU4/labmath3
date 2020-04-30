@@ -26,4 +26,9 @@ public class DataSetForCreatingPolynimial {
         return instance;
     }
 
+    public void clear(){
+        coordinatesY = new ArrayList<>();
+        coordinatesX = new ArrayList<>();
+    }
+
 }
