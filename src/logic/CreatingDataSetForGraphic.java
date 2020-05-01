@@ -11,6 +11,7 @@ public class CreatingDataSetForGraphic {
     dataSetForCreatingGraphic dataSetForCreatingGraphic = dataSet.dataSetForCreatingGraphic.getInstance();
 
     public void create(){
+        dataSetForCreatingGraphic.clear();
         for (double i = -2 * Math.PI; i <= 2.25 * Math.PI; i += 0.1){
             double y = mathFunction.getY(i);
             double yPolynomial = polynomialLangrage.getY(i);

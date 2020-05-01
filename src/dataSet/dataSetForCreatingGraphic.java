@@ -32,6 +32,13 @@ public class dataSetForCreatingGraphic {
         coordinatesYPolynomial.add(yPolynomial);
     }
 
+    public  void clear(){
+        coordinatesXPolynomial =new ArrayList<>();
+        coordinatesX = new ArrayList<>();
+        coordinatesYPolynomial = new ArrayList<>();
+        coordinatesY = new ArrayList<>();
+    }
+
     public XYDataset createDataset(){
         XYSeries series1 = new XYSeries("График функции sin(x) * sqrt(x + PI*2)");
         for (int i = 0; i < coordinatesX.size(); i ++){

@@ -26,12 +26,13 @@ public class GUI extends JFrame {
     private JButton button = new JButton("Посчитать");
     private JTextField input = new JTextField("", 5);
     private JLabel label = new JLabel("Координата X : ");
-    private  JRadioButton radio1 = new JRadioButton("Первая выборка");
+    private  JRadioButton radio1 = new JRadioButton("Первая выборка", true);
     private JRadioButton radio2 = new JRadioButton("Вторая выборка");
-    private JRadioButton radio3 = new JRadioButton("Третья выборка", true);
+    private JRadioButton radio3 = new JRadioButton("Третья выборка");
     private JButton button2 = new JButton("Обновить рисунок");
-    private CreatingDataSetForPolynimial creatingDataSetForPolynimial = new CreatingDataSetForPolynimial();
-    private CreatingDataSetForGraphic creatingDataSetForGraphic = new CreatingDataSetForGraphic();
+    private JCheckBox checkBox = new JCheckBox("Показывать график функции", true);
+    private JCheckBox checkBox2 = new JCheckBox("Показывать график полинома", true);
+
 
     public GUI(){
         super("График функция");
@@ -43,6 +44,8 @@ public class GUI extends JFrame {
         group.add(radio3);
 
         Container container = this.getContentPane();
+
+
 
         label.setPreferredSize(new Dimension(50, 25));
         input.setPreferredSize(new Dimension(50, 25));
@@ -63,8 +66,21 @@ public class GUI extends JFrame {
         JPanel myPanel = createDemoPanel();
         container.add(myPanel);
 
-        //Как поменять состояние панели
+        container.add(checkBox);
+        container.add(checkBox2);
         
+
+        //Как поменять состояние панели
+        button2.addActionListener((e)->{
+            container.remove(7);
+            container.add(createDemoPanel());
+            container.add(checkBox);
+            container.add(checkBox2);
+            container.revalidate();
+            container.repaint();
+        });
+
+
 
         setLayout(new BoxLayout(container, 1));
     }
@@ -81,8 +97,14 @@ public class GUI extends JFrame {
 
     public JPanel createDemoPanel()
     {
-
-        creatingDataSetForPolynimial.create(3);
+        CreatingDataSetForPolynimial creatingDataSetForPolynimial = new CreatingDataSetForPolynimial();
+        CreatingDataSetForGraphic creatingDataSetForGraphic = new CreatingDataSetForGraphic();
+        if (radio1.isSelected()){
+            creatingDataSetForPolynimial.create(1);
+        }else if (radio2.isSelected()){
+            creatingDataSetForPolynimial.create(2);
+        }else
+            creatingDataSetForPolynimial.create(3);
 
         creatingDataSetForGraphic.create();
         JFreeChart chart = createChart(dataSetForCreatingGraphic.createDataset());
@@ -111,18 +133,35 @@ public class GUI extends JFrame {
         renderer.setSeriesPaint(1, Color.BLUE);
         renderer.setSeriesPaint(2, Color.GRAY);
 
-        renderer.setSeriesShapesVisible(0, false);
-        renderer.setSeriesLinesVisible(0, true);
-        renderer.setSeriesShapesVisible(1, false);
-        renderer.setSeriesLinesVisible(1, true);
-        renderer.setSeriesLinesVisible(2, false);
-        renderer.setSeriesShapesVisible(2, true);
+        if (checkBox.isSelected()) {
+            renderer.setSeriesShapesVisible(0, false);
+            renderer.setSeriesLinesVisible(0, true);
+        }else{
+            renderer.setSeriesShapesVisible(0, false);
+            renderer.setSeriesLinesVisible(0, false);
+        }
+
+        if (checkBox2.isSelected()){
+            renderer.setSeriesShapesVisible(1, false);
+            renderer.setSeriesLinesVisible(1, true);
+            renderer.setSeriesLinesVisible(2, false);
+            renderer.setSeriesShapesVisible(2, true);
+        }else{
+            renderer.setSeriesShapesVisible(1, false);
+            renderer.setSeriesLinesVisible(1, false);
+            renderer.setSeriesLinesVisible(2, false);
+            renderer.setSeriesShapesVisible(2, false);
+        }
+
+
         plot.setRenderer(renderer);
         plot.setBackgroundPaint(Color.white);
 
 
         return chart;
     }
+
+
 }
 
 
