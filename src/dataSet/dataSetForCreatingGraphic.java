@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class dataSetForCreatingGraphic {
 
     private static dataSetForCreatingGraphic instance;
-    private DataSetForCreatingPolynimial dataSetForCreatingPolynimial = DataSetForCreatingPolynimial.getInstance();
     private ArrayList<Double> coordinatesX = new ArrayList<>();
     private ArrayList<Double> coordinatesY = new ArrayList<>();
     private ArrayList<Double> coordinatesXPolynomial = new ArrayList<>();
@@ -39,25 +38,6 @@ public class dataSetForCreatingGraphic {
         coordinatesY = new ArrayList<>();
     }
 
-    public XYDataset createDataset(){
-        XYSeries series1 = new XYSeries("График функции sin(x) * sqrt(x + PI*2)");
-        for (int i = 0; i < coordinatesX.size(); i ++){
-            series1.add(coordinatesX.get(i), coordinatesY.get(i));
-        }
 
-        XYSeries series2 = new XYSeries("График полинома");
-        for (int i = 0; i < coordinatesXPolynomial.size(); i ++){
-            series2.add(coordinatesXPolynomial.get(i), coordinatesYPolynomial.get(i));
-        }
-        XYSeries series3 = new XYSeries("Точки интерполяции");
-        for (int i = 0; i < dataSetForCreatingPolynimial.getCoordinatesX().size(); i ++ ){
-            series3.add(dataSetForCreatingPolynimial.getCoordinatesX().get(i), dataSetForCreatingPolynimial.getCoordinatesY().get(i));
-        }
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series1);
-        dataset.addSeries(series2);
-        dataset.addSeries(series3);
-        return dataset;
-    }
 
 }

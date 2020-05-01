@@ -1,5 +1,6 @@
 package Drawing;
 
+import Graphic.GraphicPanel;
 import dataSet.dataSetForCreatingGraphic;
 import logic.CreatingDataSetForGraphic;
 import logic.CreatingDataSetForPolynimial;
@@ -21,7 +22,7 @@ import javax.swing.*;
 public class GUI extends JFrame {
 
     private PolynomialLangrage polynomialLangrage = new PolynomialLangrage();
-    private dataSetForCreatingGraphic dataSetForCreatingGraphic = dataSet.dataSetForCreatingGraphic.getInstance();
+
 
     private JButton button = new JButton("Посчитать");
     private JTextField input = new JTextField("", 5);
@@ -29,7 +30,6 @@ public class GUI extends JFrame {
     private  JRadioButton radio1 = new JRadioButton("Первая выборка", true);
     private JRadioButton radio2 = new JRadioButton("Вторая выборка");
     private JRadioButton radio3 = new JRadioButton("Третья выборка");
-    private JButton button2 = new JButton("Обновить рисунок");
     private JCheckBox checkBox = new JCheckBox("Показывать график функции", true);
     private JCheckBox checkBox2 = new JCheckBox("Показывать график полинома", true);
 
@@ -43,6 +43,7 @@ public class GUI extends JFrame {
         group.add(radio2);
         group.add(radio3);
 
+        GraphicPanel graphicPanel = new GraphicPanel(radio1, radio2, checkBox, checkBox2);
         Container container = this.getContentPane();
 
 
@@ -63,7 +64,7 @@ public class GUI extends JFrame {
 
         container.add(button);
 
-        JPanel myPanel = createDemoPanel();
+        JPanel myPanel = graphicPanel.createDemoPanel();
         container.add(myPanel);
 
         container.add(checkBox);
@@ -76,7 +77,7 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.remove(6);
-                container.add(createDemoPanel());
+                container.add(graphicPanel.createDemoPanel());
                 container.add(checkBox);
                 container.add(checkBox2);
                 container.revalidate();
@@ -103,74 +104,6 @@ public class GUI extends JFrame {
             JOptionPane.showMessageDialog(null, message, "Output", JOptionPane.PLAIN_MESSAGE);
         }
     }
-
-    public JPanel createDemoPanel()
-    {
-        CreatingDataSetForPolynimial creatingDataSetForPolynimial = new CreatingDataSetForPolynimial();
-        CreatingDataSetForGraphic creatingDataSetForGraphic = new CreatingDataSetForGraphic();
-        if (radio1.isSelected()){
-            creatingDataSetForPolynimial.create(1);
-        }else if (radio2.isSelected()){
-            creatingDataSetForPolynimial.create(2);
-        }else
-            creatingDataSetForPolynimial.create(3);
-
-        creatingDataSetForGraphic.create();
-        JFreeChart chart = createChart(dataSetForCreatingGraphic.createDataset());
-        chart.setPadding(new RectangleInsets( 1, 1, 1, 1));
-        ChartPanel panel = new ChartPanel(chart);
-        panel.setPreferredSize(new Dimension(400, 400));
-        return panel;
-    }
-
-    private JFreeChart createChart(XYDataset dataset)
-    {
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "График",
-                "x",
-                "y",
-                dataset
-        );
-        XYPlot plot = chart.getXYPlot();
-
-        plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
-        plot.setDomainCrosshairVisible(true);
-        plot.setRangeCrosshairVisible(true);
-
-        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesPaint(1, Color.BLUE);
-        renderer.setSeriesPaint(2, Color.GRAY);
-
-        if (checkBox.isSelected()) {
-            renderer.setSeriesShapesVisible(0, false);
-            renderer.setSeriesLinesVisible(0, true);
-        }else{
-            renderer.setSeriesShapesVisible(0, false);
-            renderer.setSeriesLinesVisible(0, false);
-        }
-
-        if (checkBox2.isSelected()){
-            renderer.setSeriesShapesVisible(1, false);
-            renderer.setSeriesLinesVisible(1, true);
-            renderer.setSeriesLinesVisible(2, false);
-            renderer.setSeriesShapesVisible(2, true);
-        }else{
-            renderer.setSeriesShapesVisible(1, false);
-            renderer.setSeriesLinesVisible(1, false);
-            renderer.setSeriesLinesVisible(2, false);
-            renderer.setSeriesShapesVisible(2, false);
-        }
-
-
-        plot.setRenderer(renderer);
-        plot.setBackgroundPaint(Color.white);
-
-
-        return chart;
-    }
-
-
 }
 
 
