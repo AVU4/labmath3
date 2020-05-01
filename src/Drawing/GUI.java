@@ -1,22 +1,10 @@
 package Drawing;
 
+import ActionListeners.ButtonEventListener;
+import ActionListeners.UpdateGraphic;
 import Graphic.GraphicPanel;
-import dataSet.dataSetForCreatingGraphic;
-import logic.CreatingDataSetForGraphic;
-import logic.CreatingDataSetForPolynimial;
 import math.PolynomialLangrage;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.data.xy.XYDataset;
-
 import java.awt.*;
-import java.awt.event.*;
-import java.text.SimpleDateFormat;
 import javax.swing.*;
 
 public class GUI extends JFrame {
@@ -59,7 +47,7 @@ public class GUI extends JFrame {
         container.add(input);
 
 
-        button.addActionListener(new ButtonEventListener ());
+        button.addActionListener(new ButtonEventListener(input));
 
 
         container.add(button);
@@ -71,38 +59,16 @@ public class GUI extends JFrame {
         container.add(checkBox2);
 
 
+        UpdateGraphic updateGraphic = new UpdateGraphic(container, checkBox, checkBox2, graphicPanel);
 
-        class updateGraphic implements ActionListener {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                container.remove(6);
-                container.add(graphicPanel.createDemoPanel());
-                container.add(checkBox);
-                container.add(checkBox2);
-                container.revalidate();
-                container.repaint();
-            }
-        }
-
-        radio1.addActionListener(new updateGraphic());
-        radio2.addActionListener(new updateGraphic());
-        radio3.addActionListener(new updateGraphic());
-        checkBox.addActionListener(new updateGraphic());
-        checkBox2.addActionListener(new updateGraphic());
+        radio1.addActionListener(updateGraphic);
+        radio2.addActionListener(updateGraphic);
+        radio3.addActionListener(updateGraphic);
+        checkBox.addActionListener(updateGraphic);
+        checkBox2.addActionListener(updateGraphic);
 
 
         setLayout(new BoxLayout(container, 1));
-    }
-    class ButtonEventListener implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Double x = Double.parseDouble(input.getText());
-            double y =  polynomialLangrage.getY(x);
-            String message = "Приближённое значение функции : " + y;
-            JOptionPane.showMessageDialog(null, message, "Output", JOptionPane.PLAIN_MESSAGE);
-        }
     }
 }
 

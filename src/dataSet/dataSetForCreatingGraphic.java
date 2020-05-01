@@ -1,10 +1,6 @@
 package dataSet;
 
 import lombok.Getter;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 
 import java.util.ArrayList;
 
