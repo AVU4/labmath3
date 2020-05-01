@@ -57,29 +57,38 @@ public class GUI extends JFrame {
         container.add(label);
         container.add(input);
 
+
         button.addActionListener(new ButtonEventListener ());
 
 
         container.add(button);
-        container.add(button2);
 
         JPanel myPanel = createDemoPanel();
         container.add(myPanel);
 
         container.add(checkBox);
         container.add(checkBox2);
-        
 
-        //Как поменять состояние панели
-        button2.addActionListener((e)->{
-            container.remove(7);
-            container.add(createDemoPanel());
-            container.add(checkBox);
-            container.add(checkBox2);
-            container.revalidate();
-            container.repaint();
-        });
 
+
+        class updateGraphic implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                container.remove(6);
+                container.add(createDemoPanel());
+                container.add(checkBox);
+                container.add(checkBox2);
+                container.revalidate();
+                container.repaint();
+            }
+        }
+
+        radio1.addActionListener(new updateGraphic());
+        radio2.addActionListener(new updateGraphic());
+        radio3.addActionListener(new updateGraphic());
+        checkBox.addActionListener(new updateGraphic());
+        checkBox2.addActionListener(new updateGraphic());
 
 
         setLayout(new BoxLayout(container, 1));
