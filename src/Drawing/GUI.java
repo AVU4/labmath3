@@ -3,14 +3,14 @@ package Drawing;
 import ActionListeners.ButtonEventListener;
 import ActionListeners.UpdateGraphic;
 import Graphic.GraphicPanel;
+import lombok.Getter;
+import lombok.Setter;
 import math.PolynomialLangrage;
 import java.awt.*;
 import javax.swing.*;
 
+
 public class GUI extends JFrame {
-
-    private PolynomialLangrage polynomialLangrage = new PolynomialLangrage();
-
 
     private JButton button = new JButton("Посчитать");
     private JTextField input = new JTextField("", 5);

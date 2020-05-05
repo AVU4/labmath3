@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 
 
-@NoArgsConstructor
 @Getter
 public class DataSetForCreatingPolynimial {
 
@@ -14,6 +13,12 @@ public class DataSetForCreatingPolynimial {
 
     private ArrayList<Double> coordinatesX = new ArrayList<>();
     private ArrayList<Double> coordinatesY = new ArrayList<>();
+
+    private DataSetForCreatingPolynimial(){
+
+    }
+
+
 
     public void addPoint(double x, double y){
         coordinatesX.add(x);

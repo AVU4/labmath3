@@ -41,7 +41,7 @@ public class CreatingDataSetForGraphic {
         for (int i = 0; i < coordinatesXPolynomial.size(); i ++){
             series2.add(coordinatesXPolynomial.get(i), coordinatesYPolynomial.get(i));
         }
-        XYSeries series3 = new XYSeries("Точки интерполяции");
+        XYSeries series3 = new XYSeries("Узлы интерполяции");
         for (int i = 0; i < dataSetForCreatingPolynimial.getCoordinatesX().size(); i ++ ){
             series3.add(dataSetForCreatingPolynimial.getCoordinatesX().get(i), dataSetForCreatingPolynimial.getCoordinatesY().get(i));
         }

@@ -13,6 +13,10 @@ public class dataSetForCreatingGraphic {
     private ArrayList<Double> coordinatesXPolynomial = new ArrayList<>();
     private ArrayList<Double> coordinatesYPolynomial = new ArrayList<>();
 
+    private dataSetForCreatingGraphic(){
+
+    }
+
     public static dataSetForCreatingGraphic getInstance(){
         if (instance == null){
             instance = new dataSetForCreatingGraphic();
