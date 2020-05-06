@@ -41,6 +41,7 @@ public class GraphicPanel {
                 return panel;
             }
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
     }

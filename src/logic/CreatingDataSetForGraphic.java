@@ -35,20 +35,15 @@ public class CreatingDataSetForGraphic {
         for (int i = 0; i < coordinatesXPolynomial.size(); i ++){
             series2.add(coordinatesXPolynomial.get(i), coordinatesYPolynomial.get(i));
         }
-//        XYSeries series3 = new XYSeries("Узлы интерполяции");
-//        for (int i = 0; i < coordinatesXPolynomial.size(); i ++ ){
-//            series3.add(dataSetForCreatingPolynimial.getCoordinatesX().get(i), dataSetForCreatingPolynimial.getCoordinatesY().get(i));
-//        }
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series2);
-//        dataset.addSeries(series3);
         return dataset;
     }
 
     public boolean test(){
-        if (dataSetInput.getXn() != 0 && dataSetInput.getX0() != 0 && dataSetInput.getAccuracy() != 0 && !dataSetInput.getFunction().equals("") && dataSetInput.getY0() != 0){
-            return true;
-        }else
+        if (dataSetInput.getXn() == 0 && dataSetInput.getX0() == 0 && dataSetInput.getAccuracy() == 0 && dataSetInput.getFunction() == null && dataSetInput.getY0() == 0){
             return false;
+        }else
+            return true;
     }
 }

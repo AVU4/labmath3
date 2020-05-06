@@ -1,6 +1,7 @@
 package ActionListeners;
 
 import Graphic.GraphicPanel;
+import dataSet.DataSetForCreatingPolynimial;
 import dataSet.DataSetInput;
 import logic.CreatingDataSetForPolynimial;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class ButtonEventListener implements ActionListener {
     private Container container;
 
     private DataSetInput dataSetInput = DataSetInput.getInstance();
+    private DataSetForCreatingPolynimial dataSetForCreatingPolynimial = DataSetForCreatingPolynimial.getInstance();
     CreatingDataSetForPolynimial creatingDataSetForPolynimial = new CreatingDataSetForPolynimial();
 
     public ButtonEventListener(JTextField inputX0, JTextField inputY0, JTextField inputFunction, JTextField inputAccuracy,
@@ -46,17 +48,22 @@ public class ButtonEventListener implements ActionListener {
             if (function.equals(""))
                 throw new NumberFormatException();
             Double accuracy = Double.parseDouble(inputAccuracy.getText());
-            double h = Math.pow(accuracy, 1/4);
+            double h = 0.1;
             dataSetInput.setH(h);
             dataSetInput.setAccuracy(accuracy);
             dataSetInput.setFunction(function);
             dataSetInput.setX0(x0);
             dataSetInput.setY0(y0);
             dataSetInput.setXn(xn);
-            container.remove(11);
+            if (container.getComponentCount() == 12) {
+                container.remove(11);
+            }
             container.add(graphicPanel.createDemoPanel());
             container.revalidate();
             container.repaint();
+//            ArrayList<Double> X = dataSetForCreatingPolynimial.getCoordinatesX();
+//            ArrayList<Double> Y = dataSetForCreatingPolynimial.getCoordinatesY();
+//            ArrayList<Double> Y1 = dataSetForCreatingPolynimial.getCoordinatesY1();
 
             //Обновление GUI
 

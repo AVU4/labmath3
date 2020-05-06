@@ -48,27 +48,24 @@ public class CreatingDataSetForPolynimial {
             mathParser.setVariables("x", X.get(i));
             mathParser.setVariables("y", Y.get(i));
             Y1.add(mathParser.Parse(function));
+            System.out.println(X.get(i) + " " + Y.get(i));
         }
         int i = 3;
         int n = (int) Math.round((xn - x0)/h);
-        while(i < n){
-            Y.add(Y.get(i - 3) + 4/3*h*(2 * Y1.get(i) - Y1.get(i - 1) + 2 * Y1.get(i - 2)));
+        while(i <= n){
+            Y.add(Y.get(i - 3) + 4*h*(2 * Y1.get(i) - Y1.get(i - 1) + 2 * Y1.get(i - 2))/3);
             X.add(X.get(i) + h);
             double B = Y.get(i + 1);
-            double A = B;
-            mathParser.setVariables("x", X.get(i + 1));
-            mathParser.setVariables("y", A);
-            Y1.add(mathParser.Parse(function));
-            B = Y.get(i - 1) + h* (Y1.get(i  +1) + 4 * Y1.get(i) + Y1.get(i - 1))/3;
-            while (Math.abs(A - B) < accuracy){
+            double A = 10000000;
+            while (Math.abs(A - B) > accuracy){
                 A = B;
                 mathParser.setVariables("x", X.get(i + 1));
                 mathParser.setVariables("y", A);
                 Y1.add(mathParser.Parse(function));
-                B = Y.get(i - 1) + h* (Y1.get(i  +1) + 4 * Y1.get(i) + Y1.get(i - 1))/3;
-
+                B = Y.get(i - 1) + h*(Y1.get(i+1) + 4*Y1.get(i) + Y1.get(i - 1))/3;
             }
-            Y.add(B);
+            Y.set(i + 1, B);
+            System.out.println(X.get(i) + " " + Y.get(i));
             i ++;
         }
         addDataSet();
@@ -77,6 +74,7 @@ public class CreatingDataSetForPolynimial {
     public void addDataSet(){
         dataSetForCreatingPolynimial.setCoordinatesX(X);
         dataSetForCreatingPolynimial.setCoordinatesY(Y);
+
     }
 
 }
