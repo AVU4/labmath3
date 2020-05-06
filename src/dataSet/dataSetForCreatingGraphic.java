@@ -8,8 +8,6 @@ import java.util.ArrayList;
 public class dataSetForCreatingGraphic {
 
     private static dataSetForCreatingGraphic instance;
-    private ArrayList<Double> coordinatesX = new ArrayList<>();
-    private ArrayList<Double> coordinatesY = new ArrayList<>();
     private ArrayList<Double> coordinatesXPolynomial = new ArrayList<>();
     private ArrayList<Double> coordinatesYPolynomial = new ArrayList<>();
 
@@ -24,18 +22,14 @@ public class dataSetForCreatingGraphic {
         return instance;
     }
 
-    public void addPoint(double x, double y, double yPolynomial){
-        coordinatesX.add(x);
-        coordinatesY.add(y);
+    public void addPoint(double x, double yPolynomial){
         coordinatesXPolynomial.add(x);
         coordinatesYPolynomial.add(yPolynomial);
     }
 
     public  void clear(){
         coordinatesXPolynomial =new ArrayList<>();
-        coordinatesX = new ArrayList<>();
         coordinatesYPolynomial = new ArrayList<>();
-        coordinatesY = new ArrayList<>();
     }
 
 

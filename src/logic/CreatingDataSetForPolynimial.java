@@ -1,34 +1,82 @@
 package logic;
 
+import Parser.MathParser;
 import dataSet.DataSetForCreatingPolynimial;
+import dataSet.DataSetInput;
 import math.MathFunction;
 
+import java.util.ArrayList;
 
 
 public class CreatingDataSetForPolynimial {
 
-    MathFunction mathFunction = new MathFunction();
+    DataSetInput dataSetInput = DataSetInput.getInstance();
+    MathParser mathParser = new MathParser();
+    ArrayList<Double> Y1 = new ArrayList<>();
+    ArrayList<Double> X = new ArrayList<>();
+    ArrayList<Double> Y = new ArrayList<>();
     DataSetForCreatingPolynimial dataSetForCreatingPolynimial = DataSetForCreatingPolynimial.getInstance();
 
-    public void create(int mode){
-        dataSetForCreatingPolynimial.clear();
-        if (mode == 1) {
-            for (double i = -2 * Math.PI; i <= 2 * Math.PI; i += 1.5) {
-                double y = mathFunction.getY(i);
-                dataSetForCreatingPolynimial.addPoint(i, y);
-            }
-        }else if (mode == 2) {
-            for (double i = -2 * Math.PI + 0.2; i <= 2 * Math.PI; i += 0.96) {
-                double y = mathFunction.getY(i);
-                dataSetForCreatingPolynimial.addPoint(i, y);
-            }
-        }else  if (mode == 3) {
-            for (double i = -2 * Math.PI; i <= 5 * Math.PI; i += 4.6) {
-                double y = mathFunction.getY(i);
-                dataSetForCreatingPolynimial.addPoint(i, y);
-            }
+    public void create() throws Exception {
+        Double x0 = dataSetInput.getX0();
+        Double y0 = dataSetInput.getY0();
+        Double xn = dataSetInput.getXn();
+        X.add(x0);
+        Y.add(y0);
+        String function = dataSetInput.getFunction();
+        Double accuracy = dataSetInput.getAccuracy();
+        mathParser.setVariables("x", x0);
+        mathParser.setVariables("y", y0);
+        double y1 = mathParser.Parse(function);
+        Y1.add(y1);
+        Double h = dataSetInput.getH();
+        for (int i = 1; i < 4; i ++){
+            mathParser.setVariables("x", X.get(i - 1));
+            mathParser.setVariables("y", Y.get(i - 1));
+            double k0 = h*mathParser.Parse(function);
+            mathParser.setVariables("x", X.get(i - 1) + h/2);
+            mathParser.setVariables("y", Y.get(i - 1) + k0/2);
+            double k1 = h*mathParser.Parse(function);
+            mathParser.setVariables("x", X.get(i - 1) + h/2);
+            mathParser.setVariables("y", Y.get(i - 1) + k1/2);
+            double k2 = h * mathParser.Parse(function);
+            mathParser.setVariables("x", X.get(i - 1) + h);
+            mathParser.setVariables("y", Y.get(i - 1) + k2);
+            double k3 = h * mathParser.Parse(function);
+            X.add(X.get(i - 1) + h);
+            Y.add(Y.get(i - 1) + (k0 + 2 * k1 + 2*k2 + k3)/6);
+            mathParser.setVariables("x", X.get(i));
+            mathParser.setVariables("y", Y.get(i));
+            Y1.add(mathParser.Parse(function));
         }
+        int i = 3;
+        int n = (int) Math.round((xn - x0)/h);
+        while(i < n){
+            Y.add(Y.get(i - 3) + 4/3*h*(2 * Y1.get(i) - Y1.get(i - 1) + 2 * Y1.get(i - 2)));
+            X.add(X.get(i) + h);
+            double B = Y.get(i + 1);
+            double A = B;
+            mathParser.setVariables("x", X.get(i + 1));
+            mathParser.setVariables("y", A);
+            Y1.add(mathParser.Parse(function));
+            B = Y.get(i - 1) + h* (Y1.get(i  +1) + 4 * Y1.get(i) + Y1.get(i - 1))/3;
+            while (Math.abs(A - B) < accuracy){
+                A = B;
+                mathParser.setVariables("x", X.get(i + 1));
+                mathParser.setVariables("y", A);
+                Y1.add(mathParser.Parse(function));
+                B = Y.get(i - 1) + h* (Y1.get(i  +1) + 4 * Y1.get(i) + Y1.get(i - 1))/3;
 
-
+            }
+            Y.add(B);
+            i ++;
+        }
+        addDataSet();
     }
+
+    public void addDataSet(){
+        dataSetForCreatingPolynimial.setCoordinatesX(X);
+        dataSetForCreatingPolynimial.setCoordinatesY(Y);
+    }
+
 }

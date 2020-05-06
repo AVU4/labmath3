@@ -19,10 +19,12 @@ public class DataSetForCreatingPolynimial {
     }
 
 
+    public void setCoordinatesX(ArrayList<Double> coordinatesX) {
+        this.coordinatesX = coordinatesX;
+    }
 
-    public void addPoint(double x, double y){
-        coordinatesX.add(x);
-        coordinatesY.add(y);
+    public void setCoordinatesY(ArrayList<Double> coordinatesY) {
+        this.coordinatesY = coordinatesY;
     }
 
     public static DataSetForCreatingPolynimial getInstance(){
