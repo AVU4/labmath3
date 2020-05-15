@@ -31,7 +31,7 @@ public class CreatingDataSetForGraphic {
         ArrayList<Double> coordinatesXPolynomial = dataSetForCreatingGraphic.getCoordinatesXPolynomial();
         ArrayList<Double> coordinatesYPolynomial = dataSetForCreatingGraphic.getCoordinatesYPolynomial();
 
-        XYSeries series2 = new XYSeries("График полинома");
+        XYSeries series2 = new XYSeries("График функции " + dataSetInput.getFunction());
         for (int i = 0; i < coordinatesXPolynomial.size(); i ++){
             series2.add(coordinatesXPolynomial.get(i), coordinatesYPolynomial.get(i));
         }

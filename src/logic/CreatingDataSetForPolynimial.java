@@ -57,12 +57,17 @@ public class CreatingDataSetForPolynimial {
             X.add(X.get(i) + h);
             double B = Y.get(i + 1);
             double A = 10000000;
-            while (Math.abs(A - B) > accuracy){
+            boolean flagFirst = true;
+            while (Math.abs(A - B) > accuracy || flagFirst){
                 A = B;
                 mathParser.setVariables("x", X.get(i + 1));
                 mathParser.setVariables("y", A);
-                Y1.add(mathParser.Parse(function));
+                if (flagFirst)
+                    Y1.add(mathParser.Parse(function));
+                else
+                    Y1.set(i + 1, mathParser.Parse(function));
                 B = Y.get(i - 1) + h*(Y1.get(i+1) + 4*Y1.get(i) + Y1.get(i - 1))/3;
+                flagFirst = false;
             }
             Y.set(i + 1, B);
             System.out.println(X.get(i) + " " + Y.get(i));
